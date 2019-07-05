@@ -1,0 +1,25 @@
+# Configuration of the CI pipeline
+name: 'Stack Docker build'
+canonical: 'stack-dockerbuild'
+description: 'Build and test a docker image before pushing it to a registry.'
+keywords:
+  - 'docker'
+  - 'registry'
+  - 'build'
+  - 'container'
+  - 'test'
+  - 'validate'
+
+author: 'Cycloid'
+image: ''
+type: 'stack'
+technologies:
+  - technology: Docker
+    version: n/a
+config:
+  # Configuration of the CI pipeline
+  pipeline:
+    pipeline:
+      path: 'pipeline/pipeline.yml'
+    variables:
+      path: 'pipeline/variables.sample.yml'
