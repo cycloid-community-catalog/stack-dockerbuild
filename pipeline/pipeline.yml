@@ -20,7 +20,7 @@ shared:
         else
           echo ${EXTRA_TAGS} > merged-stack/.ci/TAGS
         fi
-        if [ -n "BUILD_ARGS" ]; then
+        if [ -n "$BUILD_ARGS" ] && [[ "$BUILD_ARGS" != "null" ]]; then
           python -c "import json, os, yaml; print('\n'.join([ '%s=%s' % (k,v) for k, v in json.loads(os.environ['BUILD_ARGS'].replace('\\n','\\\\\\\n')).items()]))" >> merged-stack/.ci/build_args_file
         fi
     outputs:
@@ -30,7 +30,7 @@ shared:
 resource_types:
 
 - name: registry-image
-  type: registry-image
+  type: docker-image
   privileged: true
   source:
     repository: concourse/registry-image-resource
