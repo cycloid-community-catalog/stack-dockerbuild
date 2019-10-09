@@ -68,7 +68,7 @@ resources:
     repo: ((code_git_repository_name))
     access_token: ((code_github_access_token))
     private_key: ((code_git_private_key))
-    base_url: 'https://console.cycloid.io/projects/((customer))/((project))/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME'
+    base_url: 'https://console.cycloid.io/organizations/((customer))/projects/((project))/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME'
 
 
 jobs:
