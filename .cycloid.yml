@@ -1,6 +1,7 @@
 # Configuration of the CI pipeline
 name: 'Stack Docker build'
 canonical: 'stack-dockerbuild'
+status: 'public'
 description: 'Build and test a docker image before pushing it to a registry.'
 keywords:
   - 'docker'
