@@ -39,15 +39,8 @@ resource_types:
 - name: pull-request
   type: docker-image
   source:
-    repository: jtarchie/pr
-
-- name: report-github-status
-  type: docker-image
-  source:
-    # Use cycloid one because of https://github.com/dpb587/github-status-resource/pull/2
-    # repository: dpb587/github-status-resource
-    # tag: master
-    repository: cycloid/github-status-resource
+    repository: teliaoss/github-pr-resource
+    tag: v0.15.0
 
 resources:
 
@@ -63,13 +56,8 @@ resources:
 - name: pull-request
   type: pull-request
   source:
-    version: every
-    uri: ((code_git_repository))
-    repo: ((code_git_repository_name))
+    repository: ((code_git_repository))
     access_token: ((code_github_access_token))
-    private_key: ((code_git_private_key))
-    base_url: 'https://console.cycloid.io/organizations/((customer))/projects/((project))/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME'
-
 
 jobs:
 
@@ -80,14 +68,21 @@ jobs:
     - aggregate:
       - get: git_stack
         trigger: true
+
       - get: pull-request
         trigger: true
+        version: every
+        params:
+          integration_tool: checkout
 
     - put: pull-request
       params:
+        base_context: cycloid-ci
         context: build
         path: pull-request
         status: pending
+        target_url: 'https://console.cycloid.io/organizations/((customer))/projects/((project))/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_ID'
+
     - task: merge-stack-and-config
       config:
         <<: *merge-stack-and-config
@@ -127,12 +122,16 @@ jobs:
     on_failure:
       put: pull-request
       params:
+        base_context: cycloid-ci
         context: build
         path: pull-request
         status: failure
+        target_url: 'https://console.cycloid.io/organizations/((customer))/projects/((project))/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_ID'
     on_success:
       put: pull-request
       params:
+        base_context: cycloid-ci
         context: build
         path: pull-request
         status: success
+        target_url: 'https://console.cycloid.io/organizations/((customer))/projects/((project))/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_ID'
