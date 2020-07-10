@@ -1,0 +1,428 @@
+---
+default:
+  pipeline:
+    Registry:
+      - name: "Image name"
+        description: "Name of the repository image. If using AWS ECR you only need the repository name, not the full URI e.g. `alpine` not `012345678910.dkr.ecr.us-east-1.amazonaws.com/alpine`."
+        key: registry_image_name
+        widget: simple_text
+        type: string
+        default: myuser/imagename
+      - name: "Username"
+        description: "Username for regular image repository, otherwise leave it as a empty string."
+        key: registry_username
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "Password"
+        description: "Password for regular image repository, otherwise leave it as a empty string."
+        key: registry_password
+        widget: cy_cred
+        type: string
+        default: ""
+
+      - name: "AWS access key"
+        description: "AWS access key if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_access_key
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "AWS secret key"
+        description: "AWS secret key if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_secret_key
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "Amazon AWS region"
+        description: "AWS region if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_default_region
+        widget: auto_complete
+        type: string
+        values: ["eu-north-1","ap-south-1","eu-west-3","eu-west-2","eu-west-1","ap-northeast-2","ap-northeast-1","sa-east-1","ca-central-1","ap-southeast-1","ap-southeast-2","eu-central-1","us-east-1","us-east-2","us-west-1","us-west-2"]
+        default: ""
+      - name: "Registry tag"
+        description: "Tag to put on the builded image (eg latest)."
+        key: registry_tag
+        widget: simple_text
+        type: string
+        default: ($ environment $)
+      - name: "Registry extra tags"
+        description: "Additional tags to put on the builded image. Separate each tag with a space."
+        key: registry_extra_tags
+        widget: simple_text
+        type: string
+        default: ""
+      - name: "Registry commit id as tag"
+        description: "Add additionnal tag using short commit id"
+        key: registry_tag_commit_id
+        widget: switch
+        type: boolean
+        default: false
+    Repos:
+      - name: "Code git URL"
+        description: "URL to the Git repository containing the source code."
+        key: code_git_repository
+        widget: simple_text
+        type: string
+        default: "git@github.com:..."
+      - name: "Code git branch"
+        description: "Branch of the source code Git repository."
+        key: code_git_branch
+        widget: simple_text
+        type: string
+        default: "master"
+      - name: "Code git key"
+        description: "SSH key pair to fetch source code Git repository."
+        key: code_git_private_key
+        type: string
+        widget: cy_cred
+        default: "((ssh_config.ssh_key))"
+      - name: "Build context path"
+        description: "Path from the repository root to the files to build. The Dockerfile location is relative to this path."
+        key: code_build_context
+        widget: simple_text
+        type: string
+        default: "."
+      - name: "Dockerfile location"
+        description: "Dockerfile location related to code_build_context."
+        key: code_dockerfile_location
+        widget: simple_text
+        type: string
+        default: "Dockerfile"
+      - name: "Build args"
+        description: "Set build-time variables for the Docker build."
+        key: code_build_args
+        widget: text_area
+        type: map
+        default: {}
+
+split-jobs:
+  pipeline:
+    Registry:
+      - name: "Image name"
+        description: "Name of the repository image. If using AWS ECR you only need the repository name, not the full URI e.g. `alpine` not `012345678910.dkr.ecr.us-east-1.amazonaws.com/alpine`."
+        key: registry_image_name
+        widget: simple_text
+        type: string
+        default: myuser/imagename
+      - name: "Username"
+        description: "Username for regular image repository, otherwise leave it as a empty string."
+        key: registry_username
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "Password"
+        description: "Password for regular image repository, otherwise leave it as a empty string."
+        key: registry_password
+        widget: cy_cred
+        type: string
+        default: ""
+
+      - name: "AWS access key"
+        description: "AWS access key if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_access_key
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "AWS secret key"
+        description: "AWS secret key if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_secret_key
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "Amazon AWS region"
+        description: "AWS region if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_default_region
+        widget: auto_complete
+        type: string
+        values: ["eu-north-1","ap-south-1","eu-west-3","eu-west-2","eu-west-1","ap-northeast-2","ap-northeast-1","sa-east-1","ca-central-1","ap-southeast-1","ap-southeast-2","eu-central-1","us-east-1","us-east-2","us-west-1","us-west-2"]
+        default: ""
+      - name: "Registry tag"
+        description: "Tag to put on the builded image (eg latest)."
+        key: registry_tag
+        widget: simple_text
+        type: string
+        default: ($ environment $)
+      - name: "Registry extra tags"
+        description: "Additional tags to put on the builded image. Separate each tag with a space."
+        key: registry_extra_tags
+        widget: simple_text
+        type: string
+        default: ""
+      - name: "Registry commit id as tag"
+        description: "Add additionnal tag using short commit id"
+        key: registry_tag_commit_id
+        widget: switch
+        type: boolean
+        default: false
+    Repos:
+      - name: "Code git URL"
+        description: "URL to the Git repository containing the source code."
+        key: code_git_repository
+        widget: simple_text
+        type: string
+        default: "git@github.com:..."
+      - name: "Code git branch"
+        description: "Branch of the source code Git repository."
+        key: code_git_branch
+        widget: simple_text
+        type: string
+        default: "master"
+      - name: "Code git key"
+        description: "SSH key pair to fetch source code Git repository."
+        key: code_git_private_key
+        type: string
+        widget: cy_cred
+        default: "((ssh_config.ssh_key))"
+      - name: "Build context path"
+        description: "Path from the repository root to the files to build. The Dockerfile location is relative to this path."
+        key: code_build_context
+        widget: simple_text
+        type: string
+        default: "."
+      - name: "Dockerfile location"
+        description: "Dockerfile location related to code_build_context."
+        key: code_dockerfile_location
+        widget: simple_text
+        type: string
+        default: "Dockerfile"
+      - name: "Build args"
+        description: "Set build-time variables for the Docker build."
+        key: code_build_args
+        widget: text_area
+        type: map
+        default: {}
+
+github-pr:
+  pipeline:
+    Registry:
+      - name: "Image name"
+        description: "Name of the repository image. If using AWS ECR you only need the repository name, not the full URI e.g. `alpine` not `012345678910.dkr.ecr.us-east-1.amazonaws.com/alpine`."
+        key: registry_image_name
+        widget: simple_text
+        type: string
+        default: myuser/imagename
+      - name: "Registry tag"
+        description: "Tag to put on the builded image (eg latest)."
+        key: registry_tag
+        widget: simple_text
+        type: string
+        default: ($ environment $)
+      - name: "Registry extra tags"
+        description: "Additional tags to put on the builded image. Separate each tag with a space."
+        key: registry_extra_tags
+        widget: simple_text
+        type: string
+        default: ""
+      - name: "Registry commit id as tag"
+        description: "Add additionnal tag using short commit id"
+        key: registry_tag_commit_id
+        widget: switch
+        type: boolean
+        default: false
+    Repos:
+      - name: "Code git URL"
+        description: "URL to the Git repository containing the source code."
+        key: code_git_repository
+        widget: simple_text
+        type: string
+        default: "git@github.com:..."
+      - name: "Build context path"
+        description: "Path from the repository root to the files to build. The Dockerfile location is relative to this path."
+        key: code_build_context
+        widget: simple_text
+        type: string
+        default: "."
+      - name: "Dockerfile location"
+        description: "Dockerfile location related to code_build_context."
+        key: code_dockerfile_location
+        widget: simple_text
+        type: string
+        default: "Dockerfile"
+      - name: "Build args"
+        description: "Set build-time variables for the Docker build."
+        key: code_build_args
+        widget: text_area
+        type: map
+        default: {}
+      - name: "Github access token"
+        description: "Github access token for Github PRs"
+        key: code_github_access_token
+        type: string
+        widget: cy_cred
+        default: "((custom_github.access_token))"
+
+
+deploy-k8s:
+  pipeline:
+    Registry:
+      - name: "Image name"
+        description: "Name of the repository image. If using AWS ECR you only need the repository name, not the full URI e.g. `alpine` not `012345678910.dkr.ecr.us-east-1.amazonaws.com/alpine`."
+        key: registry_image_name
+        widget: simple_text
+        type: string
+        default: myuser/imagename
+      - name: "Username"
+        description: "Username for regular image repository, otherwise leave it as a empty string."
+        key: registry_username
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "Password"
+        description: "Password for regular image repository, otherwise leave it as a empty string."
+        key: registry_password
+        widget: cy_cred
+        type: string
+        default: ""
+
+      - name: "AWS access key"
+        description: "AWS access key if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_access_key
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "AWS secret key"
+        description: "AWS secret key if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_secret_key
+        widget: cy_cred
+        type: string
+        default: ""
+      - name: "Amazon AWS region"
+        description: "AWS region if pushing to AWS ECR, otherwise leave it as a empty string."
+        key: aws_default_region
+        widget: auto_complete
+        type: string
+        values: ["eu-north-1","ap-south-1","eu-west-3","eu-west-2","eu-west-1","ap-northeast-2","ap-northeast-1","sa-east-1","ca-central-1","ap-southeast-1","ap-southeast-2","eu-central-1","us-east-1","us-east-2","us-west-1","us-west-2"]
+        default: ""
+      - name: "Registry tag"
+        description: "Tag to put on the builded image (eg latest)."
+        key: registry_tag
+        widget: simple_text
+        type: string
+        default: ($ environment $)
+      - name: "Registry extra tags"
+        description: "Additional tags to put on the builded image. Separate each tag with a space."
+        key: registry_extra_tags
+        widget: simple_text
+        type: string
+        default: ""
+      - name: "Registry commit id as tag"
+        description: "Add additionnal tag using short commit id"
+        key: registry_tag_commit_id
+        widget: switch
+        type: boolean
+        default: false
+    Repos:
+      - name: "Code git URL"
+        description: "URL to the Git repository containing the source code."
+        key: code_git_repository
+        widget: simple_text
+        type: string
+        default: "git@github.com:..."
+      - name: "Code git branch"
+        description: "Branch of the source code Git repository."
+        key: code_git_branch
+        widget: simple_text
+        type: string
+        default: "master"
+      - name: "Code git key"
+        description: "SSH key pair to fetch source code Git repository."
+        key: code_git_private_key
+        type: string
+        widget: cy_cred
+        default: "((ssh_config.ssh_key))"
+      - name: "Build context path"
+        description: "Path from the repository root to the files to build. The Dockerfile location is relative to this path."
+        key: code_build_context
+        widget: simple_text
+        type: string
+        default: "."
+      - name: "Dockerfile location"
+        description: "Dockerfile location related to code_build_context."
+        key: code_dockerfile_location
+        widget: simple_text
+        type: string
+        default: "Dockerfile"
+      - name: "Build args"
+        description: "Set build-time variables for the Docker build."
+        key: code_build_args
+        widget: text_area
+        type: map
+        default: {}
+
+    K8s:
+      - name: "Config repository"
+        key: config_git_repository
+        type: string
+        widget: cy_crs
+        description: "Git repository URL containing the K8s config of the stack."
+        default: "git@github.com:MyUser/config-dockerbuild.git"
+        required: true
+      - name: "Config repository credentials"
+        key: config_git_private_key
+        type: string
+        widget: cy_cred
+        default: "((ssh_config.ssh_key))"
+        required: true
+      - name: "Config repository branch"
+        key: config_git_branch
+        widget: cy_branch
+        type: string
+        description: "The branch used by the config repository"
+        source: config_git_repository
+        default: "config"
+        required: true
+      - name: "k8s_continuous_deployment"
+        description: "If the K8s deployment should be trigger automaticaly after the build or not."
+        key: k8s_continuous_deployment
+        widget: switch
+        type: boolean
+        default: true
+      - name: "k8s_kubeconfig"
+        key: k8s_kubeconfig
+        type: string
+        widget: cy_cred
+        default: "((custom_k8s.kubeconfig))"
+        required: true
+      - name: "Namespace"
+        description: "Kubernetes namespace to use for the deployment."
+        key: k8s_namespace
+        widget: simple_text
+        type: string
+        default: "($ environment $)"
+      - name: "k8s_path"
+        description: "Path to the manifest(s) to apply in the config git repository, can be either a folder or a single file."
+        key: k8s_path
+        widget: simple_text
+        type: string
+        default: "($ project $)/k8s"
+      - name: "k8s_base_path"
+        description: "Path to the directory containing the base kustomization.yaml file to watch in the config git repository. Relative to k8s_path."
+        key: k8s_base_path
+        widget: simple_text
+        type: string
+        default: "base"
+      - name: "k8s_env_path"
+        description: "Path to the overlay directory containing the env-specific kustomization.yaml file to watch in the config git repository. Relative to k8s_path."
+        key: k8s_env_path
+        widget: simple_text
+        type: string
+        default: "overlays/($ environment $)"
+      - name: "k8s_wait_ready_selector"
+        description: "Used to tell the concourse kubernetes resource to wait for a certain label selector to be ready."
+        key: k8s_wait_ready_selector
+        widget: simple_text
+        type: string
+        default: ""
+      - name: "k8s_wait_ready_seconds"
+        description: "How many seconds should the concourse kubernetes resource wait for the label selector."
+        key: k8s_wait_ready_seconds
+        widget: number
+        type: integer
+        default: 60
+      - name: "k8s_version"
+        description: "Kubernetes version for the kubernetes concourse resource."
+        key: k8s_version
+        widget: simple_text
+        type: string
+        default: "1.16"
