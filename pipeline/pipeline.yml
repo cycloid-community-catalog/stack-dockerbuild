@@ -38,13 +38,6 @@ resource_types:
     repository: concourse/git-resource
     tag: latest
 
-- name: registry-image
-  type: docker-image
-  privileged: true
-  source:
-    repository: concourse/registry-image-resource
-    tag: latest
-
 resources:
 
 - name: image
@@ -87,7 +80,7 @@ jobs:
   build_logs_to_retain: 3
   plan:
 
-  - aggregate:
+  - in_parallel:
     - get: git_stack
       trigger: true
     - get: git_code

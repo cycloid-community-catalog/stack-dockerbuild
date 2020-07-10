@@ -29,13 +29,6 @@ shared:
 
 resource_types:
 
-- name: registry-image
-  type: docker-image
-  privileged: true
-  source:
-    repository: concourse/registry-image-resource
-    tag: latest
-
 - name: pull-request
   type: docker-image
   source:
