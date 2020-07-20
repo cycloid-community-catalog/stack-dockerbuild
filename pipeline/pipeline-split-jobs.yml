@@ -19,10 +19,11 @@ shared:
         echo rc-$(cat config/.git/short_ref) > merged-stack/TAGS-RC
 
         declare -a tags
-        [[ "$TAG_COMMIT_ID" == "true" ]] && tags+=( "$(cat config/.git/short_ref)" )
+        [[ "$TAG_CUSTOM_SCRIPT" == "true" ]] && tags+=( $(bash merged-stack/.ci/tag_custom_script.sh) )
         [[ "$TAG_DESCRIBE_REF" == "true" ]] && tags+=( "$(cat config/.git/describe_ref)" )
+        [[ "$TAG_COMMIT_ID" == "true" ]] && tags+=( "$(cat config/.git/short_ref)" )
         [[ -n "$EXTRA_TAGS" ]] && tags+=( ${EXTRA_TAGS} )
-        printf "%s " "${tags[@]}" > merged-stack/.ci/TAGS
+        printf "%s " "${tags[@]}" | xargs > merged-stack/.ci/TAGS
 
         if [ -n "$BUILD_ARGS" ] && [[ "$BUILD_ARGS" != "null" ]]; then
           python -c "import json, os, yaml; print('\n'.join([ '%s=%s' % (k,v) for k, v in json.loads(os.environ['BUILD_ARGS'].replace('\\n','\\\\\\\n')).items()]))" >> merged-stack/.ci/build_args_file
@@ -226,6 +227,7 @@ jobs:
       EXTRA_TAGS: ((registry_extra_tags))
       TAG_COMMIT_ID: ((registry_tag_commit_id))
       TAG_DESCRIBE_REF: ((registry_tag_describe_ref))
+      TAG_CUSTOM_SCRIPT: ((registry_tag_custom_script))
 
   - put: image
     params:
