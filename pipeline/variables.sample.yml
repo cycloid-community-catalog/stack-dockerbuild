@@ -52,7 +52,7 @@ registry_tag_custom_script: false
 #
 
 #. code_git_repository (required, string): git@github.com:...
-#+ Git repository url containing the code of the stack.
+#+ Git repository URL containing the code of the stack.
 code_git_repository: git@github.com:...
 
 #. code_git_branch (required, string): master
@@ -68,11 +68,11 @@ code_git_private_key: ((ssh_code.ssh_key))
 code_build_context: .
 
 #. code_dockerfile_location (required, string): Dockerfile
-#+ Dockerfile location related to code_build_context
+#+ Dockerfile location relative to code_build_context.
 code_dockerfile_location: Dockerfile
 
 #. code_build_args (optional, dict):
-#+ Set build-time variables for the Docker build
+#+ Set build-time variables for the Docker build.
 code_build_args:
 
 
