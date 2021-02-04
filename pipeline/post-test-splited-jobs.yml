@@ -5,6 +5,9 @@ image_resource:
   source:
     repository: docker
     tag: 17.11.0-dind
+inputs:
+  - name: merged-stack
+  - name: image
 run:
   path: /bin/sh
   args:
@@ -21,9 +24,6 @@ run:
       rc=$?
       pkill -TERM dockerd
       exit $rc
-inputs:
-- name: merged-stack
-- name: image
 params:
   REPOSITORY: image
   TAG: latest
