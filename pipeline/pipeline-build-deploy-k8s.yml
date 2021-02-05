@@ -278,7 +278,15 @@ jobs:
         K8S_ENV_PATH: ((k8s_env_path))
         CUSTOMER: ((customer))
         PROJECT: ((project))
+    
+    # Make sure the namespace exists
+    - try:
+        put: k8s
+        params:
+          kubectl: |
+            create namespace ((k8s_namespace))
 
+    # apply the kustomize manifests
     - put: k8s
       params:
         kubectl: |
