@@ -135,14 +135,6 @@ default:
         default: {}
         widget: text_area
 
-    Cycloid:
-      - name: "Stack branch"
-        description: "Branch to use on the public stack git repository."
-        key: stack_git_branch
-        type: string
-        default: "master"
-        widget: simple_text
-
 github-pr:
   pipeline:
     Registry:
@@ -206,14 +198,6 @@ github-pr:
         type: map
         default: {}
         widget: text_area
-
-    Cycloid:
-      - name: "Stack branch"
-        description: "Branch to use on the public stack git repository."
-        key: stack_git_branch
-        type: string
-        default: "master"
-        widget: simple_text
 
 build-deploy-k8s:
   pipeline:
@@ -419,14 +403,6 @@ build-deploy-k8s:
         default: "1.16"
         widget: simple_text
 
-    Cycloid:
-      - name: "Stack branch"
-        description: "Branch to use on the public stack git repository."
-        key: stack_git_branch
-        type: string
-        default: "master"
-        widget: simple_text
-
 deploy-k8s:
   pipeline:
     Registry:
@@ -589,10 +565,3 @@ deploy-k8s:
         default: "1.16"
         widget: simple_text
 
-    Cycloid:
-      - name: "Stack branch"
-        description: "Branch to use on the public stack git repository."
-        key: stack_git_branch
-        type: string
-        default: "master"
-        widget: simple_text
