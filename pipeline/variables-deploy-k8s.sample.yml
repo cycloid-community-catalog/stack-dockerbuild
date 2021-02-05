@@ -18,18 +18,17 @@ registry_username: ''
 #+ Password for regular image repository, otherwise leave it as a empty string.
 registry_password: ''
 
-#. aws_access_key (optional, string): ((aws.access_key))
-#+ AWS access key ID if pushing to AWS ECR, otherwise leave it as a empty string.
-aws_access_key: ''
+#. registry_aws_access_key (optional, string): ((aws.access_key))
+#+ AWS access key if pulling from AWS ECR, otherwise leave it as a empty string.
+registry_aws_access_key: ''
 
-#. aws_secret_key (optional, string): ((aws.secret_key))
-#+ AWS secret access key if pushing to AWS ECR, otherwise leave it as a empty string.
-aws_secret_key: ''
+#. registry_aws_secret_key (optional, string): ((aws.secret_key))
+#+ AWS secret key if pulling from AWS ECR, otherwise leave it as a empty string.
+registry_aws_secret_key: ''
 
-#. aws_region (optional, string): eu-west-1
-#+ AWS region if pushing to AWS ECR, otherwise leave it as a empty string.
-aws_region: ''
-
+#. registry_aws_region (optional, string): eu-west-1
+#+ AWS region if pulling from AWS ECR, otherwise leave it as a empty string.
+registry_aws_region: ''
 
 #
 # K8s
@@ -54,6 +53,14 @@ k8s_continuous_deployment: true
 #. k8s_kubeconfig (required): ((custom_kubeconfig))
 #+ Kubernetes config used to connect to the cluster.
 k8s_kubeconfig: ((custom_kubeconfig))
+
+#. k8s_aws_access_key (optional, string): ((aws.access_key))
+#+ AWS access key if deploying to AWS EKS, otherwise leave it as a empty string.
+k8s_aws_access_key: ''
+
+#. k8s_aws_secret_key (optional, string): ((aws.secret_key))
+#+ AWS secret key if deploying to AWS EKS, otherwise leave it as a empty string.
+k8s_aws_secret_key: ''
 
 #. k8s_namespace (required): ($ environment $)
 #+ Kubernetes namespace to use for the deployment.
