@@ -69,6 +69,7 @@ resources:
       private_key: ((code_git_private_key))
       paths:
         - ((code_build_context))/*
+#      tag_regex: 'v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+'
 
 jobs:
 

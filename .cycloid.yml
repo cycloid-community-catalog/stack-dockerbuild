@@ -1,7 +1,8 @@
 ---
 version: '2'
 # Configuration of the Cycloid stack
-name: 'Stack Docker build'
+# TODO!!!!
+name: 'Marco - Stack Docker build'
 canonical: 'stack-dockerbuild'
 status: 'public'
 description: |
