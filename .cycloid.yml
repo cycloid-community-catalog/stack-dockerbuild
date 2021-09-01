@@ -4,7 +4,7 @@ version: '2'
 # TODO!!!!
 name: 'Marco - Stack Docker build'
 canonical: 'stack-dockerbuild'
-status: 'public'
+status: 'private'
 description: |
   Build and test a docker image before pushing it to a registry.
 keywords:
