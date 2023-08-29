@@ -3,7 +3,7 @@ default:
   pipeline:
     Registry:
       - name: "Image Name"
-        description: "Name of the repository image. If using AWS ECR you only need the repository name, not the full URI e.g. `alpine` not `012345678910.dkr.ecr.us-east-1.amazonaws.com/alpine`."
+        description: "Name of the repository image. If using AWS ECR you only need the repository name, not the full URI e.g. `alpine` not `012345678910.dkr.ecr.us-east-1.amazonaws.com/alpine`. And for GCP Artifact Registry use `gcr.io/project/repo`"
         key: registry_image_name
         type: string
         default: "myuser/imagename"
