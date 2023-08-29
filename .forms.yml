@@ -10,13 +10,13 @@ default:
         widget: simple_text
         required: true
       - name: "Username"
-        description: "Username for regular image repository, otherwise leave it as a empty string."
+        description: "Username for regular image repository, otherwise leave it as a empty string. (For GCP Artifact Registry use '_json_key'"
         key: registry_username
         type: string
         default: ""
         widget: cy_cred
       - name: "Password"
-        description: "Password for regular image repository, otherwise leave it as a empty string."
+        description: "Password for regular image repository, otherwise leave it as a empty string.(For GCP Artifact Registry use a json service account eg '((mygcp.json_key))' )"
         key: registry_password
         type: string
         default: ""
