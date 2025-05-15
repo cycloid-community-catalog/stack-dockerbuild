@@ -74,7 +74,7 @@ resources:
       paths:
         - ((code_build_context))/*
 
-  - name: image
+  - name: image-docker
     type: registry-image
     icon: docker
     source:
@@ -83,9 +83,18 @@ resources:
       tag: ((registry_tag))
       username: ((registry_username))
       password: ((registry_password))
+
+  - name: image-aws-ecr
+    type: registry-image
+    icon: docker
+    source:
+      #version: every
+      repository: ((registry_image_name))
+      tag: ((registry_tag))
       aws_access_key_id: ((aws_access_key))
       aws_secret_access_key: ((aws_secret_key))
       aws_region: ((aws_region))
+
 ($- else if eq .use_case "github-pr" $)
   - name: pull-request
     type: pull-request
@@ -154,10 +163,18 @@ jobs:
         REPOSITORY: ((registry_image_name))
 
 ($- if eq .use_case "default" $)
-    - put: image
-      params:
-        additional_tags: merged-stack/.ci/TAGS
-        image: image/image.tar
+    - in_parallel:
+      - try:
+          put: image-docker
+          params:
+            additional_tags: merged-stack/.ci/TAGS
+            image: image/image.tar
+
+      - try:
+          put: image-aws-ecr
+          params:
+            additional_tags: merged-stack/.ci/TAGS
+            image: image/image.tar
 ($- else if eq .use_case "github-pr" $)
     on_failure:
       put: pull-request
