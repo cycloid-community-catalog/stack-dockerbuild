@@ -16,6 +16,10 @@ shared:
       - |
         /usr/bin/merge-stack-and-config
 
+        catalog_repository_branch  ($ .catalog_repository_branch $)
+        stack_version_name  ($ .stack_version_name $)
+        stack_version_commit  ($ .stack_version_commit $)
+
         declare -a tags
         [[ "$TAG_CUSTOM_SCRIPT" == "true" ]] && tags+=( $(bash merged-stack/.ci/tag_custom_script.sh) )
         [[ "$TAG_DESCRIBE_REF" == "true" ]] && tags+=( "$(cat config/.git/describe_ref)" )
