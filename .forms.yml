@@ -15,7 +15,7 @@ use_cases:
         widget: simple_text
         required: true
 
-- name: default
+- name: default2
   sections:
   - name: Registry
     groups:
@@ -27,7 +27,7 @@ use_cases:
         type: boolean
         widget: switch
         default: false
-- name: github-pr
+- name: github-pr2
   sections:
   - name: Code
     groups:
