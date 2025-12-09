@@ -28,3 +28,13 @@ use_cases:
         default: false
 - name: github-pr2
   sections:
+  - name: Registry
+    groups:
+    - name: Type
+      technologies: [pipeline]
+      vars:
+      - name: "Push to Docker Hub"
+        key: docker_hub
+        type: boolean
+        widget: switch
+        default: false
