@@ -7,8 +7,7 @@ use_cases:
     - name: Common
       technologies: [pipeline]
       vars:
-      - name: "Image Name"
-        description: "Name of the repository image. If using AWS ECR you only need the repository name, not the full URI e.g. `alpine` not `012345678910.dkr.ecr.us-east-1.amazonaws.com/alpine`. And for GCP Artifact Registry use `gcr.io/project/repo`"
+      - name: "COUCOUUUUUUUUU"
         key: registry_image_nameeeeeee
         type: string
         default: "myuser/imagename"
@@ -29,15 +28,3 @@ use_cases:
         default: false
 - name: github-pr2
   sections:
-  - name: Code
-    groups:
-    - name: Access
-      technologies: [pipeline]
-      vars:
-      - name: "Github Access Token"
-        description: "Github access token with repository access."
-        key: code_github_access_token
-        type: string
-        default: "(((custom_github.access_token))"
-        widget: cy_cred
-        required: true
